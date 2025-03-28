@@ -1,0 +1,7 @@
+_skbuild*
+dist*
+tests/
+src/*egg*
+.loglogin
+core
+settings.json
