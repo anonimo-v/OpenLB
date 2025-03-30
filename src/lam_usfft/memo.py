@@ -42,10 +42,14 @@ class DistributedFaissManager:
         # connection between vectorDB and MetadataDB
         self.current_key_id = 0
         
-        if self.size != 2:
-            if self.rank == 0:
-                print("This test requires exactly two processes")
-            # MPI.Finalize()
+        # if self.size != 2:
+        #     if self.rank == 0:
+        #         print("This test requires exactly two processes")
+        #     # MPI.Finalize()
+        #     self.comm.Abort()
+        #     return
+        
+        if self.size < 2:
             self.comm.Abort()
             return
 
@@ -61,14 +65,14 @@ class DistributedFaissManager:
         print(f"Rank {self.rank}: DistributedFaissManager initialized")
 
     def start_redis_on_node(self,rank):
-        redis_server_path = "/yourDB/path/redis-6.2.6/src/redis-server"
+        redis_server_path = "/home/binkma/redis-6.2.6/src/redis-server"
         try:
             # Starting Redis server using a bash command
             subprocess.Popen([redis_server_path, '--daemonize', 'yes'],
                             stdout=subprocess.PIPE,
                             text=True,
                             shell=True)
-            # Give Redis some time to start
+            # Redis time to start
             time.sleep(2)
             print("Redis server started successfully.")
         except subprocess.CalledProcessError:
@@ -145,9 +149,13 @@ class DistributedFaissManager:
                 self.add_training_key(key)    
                 
             serialized_data = pickle.dumps(data,protocol=pickle.HIGHEST_PROTOCOL)
+            # start_time = time.time()
             request = self.comm.Isend([serialized_data, MPI.BYTE], dest=self.remote_id, tag=tag)
+            # end_time = time.time()
             self.pending_requests.append(request)
             print(f"Rank {self.rank}: Sent data with tag {tag}")
+            # transmission_time = end_time - start_time
+            # print(f"Rank {self.rank}: Value transmission time for tag {tag}: {transmission_time:.6f} seconds")
 
         elif self.comm.rank == self.local_id and tag == DATA_TERMINATION_TAG:
             request = self.comm.Isend([np.zeros(1), MPI.BYTE], dest=self.remote_id, tag=tag)
@@ -174,7 +182,12 @@ class DistributedFaissManager:
             if len(self.received_data) > 0:
                 request, data = self.received_data[0]
                 print("request.Test(): ", request.Test())
+                # start_time = time.time()
                 if request.Test() and not self.index.is_trained:
+                    # end_time = time.time()
+                    # receive_time = end_time - start_time
+                    # print(f"Rank {self.rank}: Value receive time: {receive_time:.6f} seconds")
+                    
                     key,value=data
                     self.add_training_key(key)
                     self.value_wait_train.append(value)
@@ -211,7 +224,7 @@ class DistributedFaissManager:
                     self.query_termination_received = True
                     #consume the query termination message
                     self.comm.Recv(dummy_buffer, source=self.local_id, tag=QUERY_TERMINATION_TAG)
-                elif QUERY_BASE_TAG <= tag < QUERY_BASE_TAG + 1000:  #
+                elif QUERY_BASE_TAG <= tag < QUERY_BASE_TAG + 1000:  # 假设最多1000个查询
                     self.process_query()
                 else:
                     self.start_receive_non_blocking(tag=tag)
@@ -281,4 +294,8 @@ class DistributedFaissManager:
         serialized_result = pickle.dumps(value, protocol=pickle.HIGHEST_PROTOCOL)
         self.comm.Isend([serialized_result, MPI.BYTE], dest=self.local_id, tag=query_tag)
         print(f"Rank {self.rank}: Sent result data for query with tag {query_tag}")
+
+
+
+
 
