@@ -65,7 +65,7 @@ class DistributedFaissManager:
         print(f"Rank {self.rank}: DistributedFaissManager initialized")
 
     def start_redis_on_node(self,rank):
-        redis_server_path = "/youPath/redis-6.2.6/src/redis-server"
+        redis_server_path = "/home/binkma/redis-6.2.6/src/redis-server"
         try:
             # Starting Redis server using a bash command
             subprocess.Popen([redis_server_path, '--daemonize', 'yes'],
