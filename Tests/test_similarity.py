@@ -43,6 +43,7 @@ def load_and_process_data(path_prefix="",position = "top"):
 if __name__ == "__main__":
     
     # Load and process data, can be hundreds of GB to 1 TB
+
     path_prefix = "/grand/xxxxxxx/usfft1d_fwd/"
     chunk_location = "top"
     iterations_ch1 = load_and_process_data(path_prefix,chunk_location)

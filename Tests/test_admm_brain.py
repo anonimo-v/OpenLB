@@ -3,7 +3,6 @@ from lam_usfft.fftcl import FFTCL
 import asyncio
 # import dxchange
 
-# *npy data files can be downloaded from box: https://anl.app.box.com/folder/207370334443
 
 bin = 4 # 2
 
@@ -51,8 +50,3 @@ with FFTCL(n0, n1, n2, detw, deth, ntheta, dim1=144,dim2=144,index_type="flat", 
     # u =asyncio.run(slv.admm_offload_async(data, psi, lamd, u, theta, phi, alpha, liter, niter, gamma, dbg=True,dbg_step=4))
     # u =asyncio.run(slv.admm_offload_async_optimized(data, psi, lamd, u, theta, phi, alpha, liter, niter, gamma, dbg=True,dbg_step=4))
     
-    # u = u.swapaxes(0,1)
-    # u = u[:,u.shape[1]//6:-u.shape[1]//6,u.shape[1]//6:-u.shape[1]//6]
-    # dxchange.write_tiff_stack(u.real, f'{rec_folder}/u.tiff', overwrite=True)
-    
-    # print(np.linalg.norm(u))
