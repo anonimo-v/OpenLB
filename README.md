@@ -17,6 +17,15 @@ conda env create --name mLR -f install.yml
 pip install .
 ```
 
+## Similarity profiling
+
+To check the similarity between chunks over iteration at a same location.
+
+```shell
+cd OpenLB/Tests
+python test_similarity.py
+```
+
 ## CNN encoder
 
 To train the CNN encoder, please use the dataset in https:
