@@ -175,13 +175,13 @@ def load_dataset(filepath):
 
 if __name__ == "__main__":
     # create a random 4D numpy array
-    x00 = np.load("/grand/hp-ptycho/binkma/usfft1d_fwd/usfft1d_x0_train.npy")[:20480]
-    x01 = np.load("/grand/hp-ptycho/binkma/usfft1d_fwd/usfft1d_x1_train.npy")[-10240:]
+    x00 = np.load("/*/usfft1d_x0_train.npy")[:20480]
+    x01 = np.load("/*usfft1d_x1_train.npy")[-10240:]
     x0 = np.zero((30720, 16, 384, 1152))
     x0[:20480] = x00
     x0[20480:] = x01
     # print("x0 shape: ", x0.shape)
-    x1 = np.load("/grand/hp-ptycho/binkma/usfft1d_fwd/usfft1d_x1_train.npy")[-30720:]
+    x1 = np.load("/*/usfft1d_x1_train.npy")[-30720:]
     # print("x1 shape: ", x1.shape)
     # x0 = np.random.randn(3200, 384, 1152)
     # x1 = x0.copy()
@@ -193,7 +193,7 @@ if __name__ == "__main__":
     
     # print("dataset_train done")
     dataloader_train = DataLoader(dataset_train, batch_size=32, shuffle=True, drop_last=True)
-    dataset_filepath = "/grand/hp-ptycho/binkma/usfft1d_fwd/usfft1d_dataset.pkl"
+    dataset_filepath = "/*/usfft1d_dataset.pkl"
     save_dataset(dataset_train, dataset_filepath)  # Save the dataset
     # print(f"Dataset saved to {dataset_filepath}")    
     
@@ -208,13 +208,13 @@ if __name__ == "__main__":
     model = Complex2vec(input_channels=16, num_features=80).to(device)
     loss_fn = RegressionLoss().to(device)
     optimizer = optim.Adam(model.parameters(), lr=0.005)
-    checkpoint_path = "/grand/hp-ptycho/binkma/usfft_models/usfft1d_fwd_8_model_checkpoint.pth"  # Path for checkpoints
+    checkpoint_path = "/*/usfft1d_fwd_8_model_checkpoint.pth"  # Path for checkpoints
     # # train the model
     model = train_model(model, dataloader_train, loss_fn, optimizer, num_epochs, checkpoint_path)
 
 
     
-    save_path = "/grand/hp-ptycho/binkma/usfft_models/usfft1d_fwd_8_model.pth"
+    save_path = "/*/usfft1d_fwd_8_model.pth"
     torch.save(model.state_dict(), save_path)
     print(f"Model saved to {save_path}")
     
@@ -232,7 +232,7 @@ if __name__ == "__main__":
     
 
     # # # load the model parameters
-    # model.load_state_dict(torch.load("/grand/hp-ptycho/binkma/usfft_models/usfft1d_fwd_8_model.pth"))
+    # model.load_state_dict(torch.load("/*/usfft1d_fwd_8_model.pth"))
     # model.eval()
     
     # # print the model architecture
@@ -243,10 +243,10 @@ if __name__ == "__main__":
 
     # x0=torch.tensor(x0[:3200], dtype=torch.float32).view(-1, 16, 384, 1152).to(device)
     # usfft1d_embeded_keys_train = model(x0)
-    # np.save("/grand/hp-ptycho/binkma/usfft1d_fwd/usfft1d_embeded_keys.npy", usfft1d_embeded_keys_train.cpu().detach().numpy())
+    # np.save("/*/usfft1d_embeded_keys.npy", usfft1d_embeded_keys_train.cpu().detach().numpy())
 
 
-    # x = np.load("/grand/hp-ptycho/binkma/usfft1d_fwd/usfft1d_x0_test.npy")
+    # x = np.load("/*/usfft1d_fwd/usfft1d_x0_test.npy")
     
     # x = torch.tensor(x, dtype=torch.float32).view(-1, 16, 384, 1152).to(device)
     
@@ -255,7 +255,7 @@ if __name__ == "__main__":
     # print(output0.shape)
     # print(output0)
     # # save the output to a file
-    # np.save("/grand/hp-ptycho/binkma/usfft1d_fwd/usfft1d_embeded_keys_test.npy", output0.cpu().detach().numpy())
+    # np.save("*/usfft1d_embeded_keys_test.npy", output0.cpu().detach().numpy())
     
     
 

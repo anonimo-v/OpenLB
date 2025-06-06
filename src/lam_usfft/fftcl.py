@@ -261,7 +261,7 @@ class FFTCL():
         self.usfft1d_fwd_encoder = Complex2vec(input_channels=2*self.n1c, num_features=dim1).to(device)
         try:
             # self.usfft1d_fwd_encoder.load_state_dict(torch.load(usfft1d_encoder))
-            self.usfft1d_fwd_encoder.load_state_dict(torch.load("/grand/hp-ptycho/binkma/usfft_models/usfft1d_fwd_8_model.pth"))
+            self.usfft1d_fwd_encoder.load_state_dict(torch.load("/*/usfft1d_fwd_8_model.pth"))
             print("usfft1d_fwd_encoder loaded")
         except:
             print("usfft1d_fwd_encoder not loaded, use usfft1d_fwd_encoder computation")

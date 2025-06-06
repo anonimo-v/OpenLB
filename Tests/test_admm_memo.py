@@ -6,10 +6,10 @@ from lam_usfft.fftcl import FFTCL
 bin = 4 # 2
 
 # data_file = f'../../lam_usfft/data/data_brain_bin{bin}x{bin}.npy'
-data_file = f'/grand/hp-ptycho/binkma/data_brain_bin{bin}x{bin}.npy'
+data_file = f'/*/data_brain_bin{bin}x{bin}.npy'
 usfft1d_model = "./testfaiss/usfft1d_model.pth"
 
-# rec_folder = f'/data/2023-04/Nikitin_rec/rec_admm_bin{bin}x{bin}'
+# rec_folder = f'/*/rec_admm_bin{bin}x{bin}'
 data = np.load(data_file).astype('complex64')
 # print(f'data shape = {data.shape}')
 

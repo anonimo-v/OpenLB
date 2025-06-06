@@ -6,7 +6,7 @@ import time
 # bin = 3 # 2
 
 # data_file = f'../../lam_usfft/data/data_brain_bin{bin}x{bin}.npy'
-# data_file = f'/grand/hp-ptycho/binkma/data_brain{bin}x{bin}.npy'
+# data_file = f'/*/data_brain{bin}x{bin}.npy'
 n0 = 1000
 deth = 1000
 

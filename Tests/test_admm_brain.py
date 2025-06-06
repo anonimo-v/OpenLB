@@ -6,10 +6,10 @@ import asyncio
 
 bin = 4 # 2
 
-data_file = f'/grand/hp-ptycho/binkma/data_brain_bin{bin}x{bin}.npy'
-# data_file = f'/grand/hp-ptycho/binkma/data_brain{bin}x{bin}.npy'
+data_file = f'/*/data_brain_bin{bin}x{bin}.npy'
+# data_file = f'/*/data_brain{bin}x{bin}.npy'
 
-# data_file = f'/grand/hp-ptycho/binkma/data_brain{bin}x{bin}.npy'
+# data_file = f'/*/data_brain{bin}x{bin}.npy'
 
 # rec_folder = f'/data/2023-04/Nikitin_rec/rec_admm_bin{bin}x{bin}'
 data = np.load(data_file).astype('complex64')
@@ -45,7 +45,7 @@ with FFTCL(n0, n1, n2, detw, deth, ntheta, dim1=144,dim2=144,index_type="flat", 
     liter = 2 #inner loop
     alpha = 2e-9
     u= slv.admm(data, psi, lamd, u, theta, phi, alpha, liter, niter, gamma, dbg=True,dbg_step=1)
-    # np.save(f'/grand/hp-ptycho/binkma/u_admm_{bin}x{bin}_98',u)
+    # np.save(f'/*/u_admm_{bin}x{bin}_98',u)
     # u= slv.admm_offload_memmap(data, psi, lamd, u, theta, phi, alpha, liter, niter, gamma, dbg=True,dbg_step=4)
     # u =asyncio.run(slv.admm_offload_async(data, psi, lamd, u, theta, phi, alpha, liter, niter, gamma, dbg=True,dbg_step=4))
     # u =asyncio.run(slv.admm_offload_async_optimized(data, psi, lamd, u, theta, phi, alpha, liter, niter, gamma, dbg=True,dbg_step=4))
